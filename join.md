@@ -1,8 +1,13 @@
 # Joins:
+
+
 ## Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
 ``` sql
 
-sasa
+SELECT `students`.`*` , `degrees`.`name` AS `degree_name` 
+FROM `students` 
+JOIN `degrees` ON `degrees`.`id` = `students`.`degree_id` 
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
 
 ```
 
@@ -10,7 +15,11 @@ sasa
 ## Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di Neuroscienze
 ``` sql
 
-sasa
+SELECT `degrees`.*, `departments`.`name` AS `department_name` 
+FROM `degrees` 
+JOIN `departments` ON `degrees`.`department_id` = `departments`.`id` 
+WHERE `degrees`.`level` = 'Magistrale' 
+AND `departments`.`name` = 'Dipartimento di Neuroscienze';
 
 ```
 
@@ -18,7 +27,12 @@ sasa
 ## Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
 ``` sql
 
-sasa
+SELECT `courses`.`id`,`courses`.`name`, `teachers`.`name`,`teachers`.`surname`
+FROM `courses`
+JOIN `course_teacher` ON `course_teacher`.`course_id` = `courses`.`id`
+JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id`
+WHERE `teachers`.`id` = 44;
+
 
 ```
 
@@ -26,7 +40,7 @@ sasa
 ## Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome
 ``` sql
 
-sasa
+
 
 ```
 
@@ -50,7 +64,7 @@ sasa
 ## BONUS: Selezionare per ogni studente il numero di tentativi sostenuti per ogni esame, stampando anche il voto massimo. Successivamente, filtrare i tentativi con voto minimo 18.
 ``` sql
 
-sasa
+
 
 ```
 
