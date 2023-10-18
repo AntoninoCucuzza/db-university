@@ -33,14 +33,17 @@ JOIN `course_teacher` ON `course_teacher`.`course_id` = `courses`.`id`
 JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id`
 WHERE `teachers`.`id` = 44;
 
-
 ```
 
 
 ## Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome
 ``` sql
 
-
+SELECT DISTINCT `students`.* , `degrees`.`name` AS `degree`, `departments`.`name` AS `department`
+FROM `students`
+JOIN `degrees` ON `students`.`degree_id` = `degrees`.`id`
+JOIN `departments` ON `departments`.`id` = `degrees`.`department_id`  
+ORDER BY `students`.`name` ASC, `students`.`surname` ASC;
 
 ```
 
@@ -48,7 +51,11 @@ WHERE `teachers`.`id` = 44;
 ## Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
 ``` sql
 
-sasa
+SELECT DISTINCT `degrees`.`name` AS `degree_name`, `courses`.`name` AS `course	_name`, `teachers`.`name` AS `teacher_name`,`teachers`.`surname` AS `teacher_surname`
+FROM `degrees`
+JOIN `courses` ON `degrees`.`id` = `courses`.`degree_id`
+JOIN `course_teacher` ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id`;
 
 ```
 
@@ -56,7 +63,13 @@ sasa
 ## Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
 ``` sql
 
-sasa
+SELECT DISTINCT `teachers`.`name` AS `teacher_name`, `teachers`.`surname` AS `teacher_surname`,`departments`.`name`
+FROM `teachers`
+JOIN `course_teacher` ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses` ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `degrees` ON `degrees`.`id` = `courses`.`degree_id`
+JOIN `departments` ON `departments`.`id` = `degrees`.`department_id`
+WHERE `departments`.`name` = 'Dipartimento di Matematica';
 
 ```
 
